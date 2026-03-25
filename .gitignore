@@ -1,0 +1,25 @@
+# Compiled Java class files
+*.class
+
+# Package / distribution
+*.jar
+*.war
+*.ear
+
+# Build output directories
+out/
+build/
+target/
+
+# IDE project files
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.classpath
+*.project
+.settings/
+
+# macOS
+.DS_Store
