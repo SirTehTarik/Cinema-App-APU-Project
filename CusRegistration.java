@@ -91,23 +91,15 @@ public class CusRegistration extends JFrame {
             String username = userText.getText().trim();
             String password = new String(passText.getPassword()).trim();
 
-            // Do-while loop for password validation
-            int passwordAttempts = 0;
-            do {
-                if (password.length() >= 4) {
-                    break; // Password is valid
-                } else if (password.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Password cannot be empty!", "Input Error", JOptionPane.WARNING_MESSAGE);
-                    return;
-                } else {
-                    JOptionPane.showMessageDialog(this, "Password must be at least 4 characters!", "Input Error", JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-            } while (++passwordAttempts < 1);
-
             // Validation: Make sure no fields are left blank
             if (fullName.isEmpty() || username.isEmpty() || password.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Input Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Validate password length
+            if (password.length() < 4) {
+                JOptionPane.showMessageDialog(this, "Password must be at least 4 characters!", "Input Error", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             

@@ -29,32 +29,36 @@ public class FileHandler {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 7) {
-                    bookings.add(new TicketData(
-                            parts[0].trim(),
-                            parts[1].trim(),
-                            parts[2].trim(),
-                            parts[3].trim(),
-                            Double.parseDouble(parts[4].trim()),
-                            parts[5].trim(),
-                            parts[6].trim()));
-                } else if (parts.length == 6) {
-                    bookings.add(new TicketData(
-                            parts[0].trim(),
-                            parts[1].trim(),
-                            parts[2].trim(),
-                            parts[3].trim(),
-                            Double.parseDouble(parts[4].trim()),
-                            parts[5].trim(),
-                            "N/A"));
-                } else if (parts.length == 5) {
-                    bookings.add(new TicketData(
-                            parts[0].trim(),
-                            parts[1].trim(),
-                            parts[2].trim(),
-                            parts[3].trim(),
-                            Double.parseDouble(parts[4].trim())));
+                try {
+                    String[] parts = line.split(",");
+                    if (parts.length >= 7) {
+                        bookings.add(new TicketData(
+                                parts[0].trim(),
+                                parts[1].trim(),
+                                parts[2].trim(),
+                                parts[3].trim(),
+                                Double.parseDouble(parts[4].trim()),
+                                parts[5].trim(),
+                                parts[6].trim()));
+                    } else if (parts.length == 6) {
+                        bookings.add(new TicketData(
+                                parts[0].trim(),
+                                parts[1].trim(),
+                                parts[2].trim(),
+                                parts[3].trim(),
+                                Double.parseDouble(parts[4].trim()),
+                                parts[5].trim(),
+                                "N/A"));
+                    } else if (parts.length == 5) {
+                        bookings.add(new TicketData(
+                                parts[0].trim(),
+                                parts[1].trim(),
+                                parts[2].trim(),
+                                parts[3].trim(),
+                                Double.parseDouble(parts[4].trim())));
+                    }
+                } catch (NumberFormatException e) {
+                    System.err.println("Skipping malformed booking record: " + line);
                 }
             }
         } catch (IOException e) {
@@ -90,58 +94,60 @@ public class FileHandler {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 12) {
-                    movies.add(new Moviedata(
-                            parts[0].trim(),
-                            parts[1].trim(),
-                            parts[2].trim(),
-                            Double.parseDouble(parts[3].trim()),
-                            parts[4].trim(),
-                            parts[5].trim(),
-                            parts[6].trim(),
-                            parts[7].trim(),
-                            parts[8].trim(),
-                            parts[9].trim(),
-                            parts[10].trim(),
-                            parts[11].trim()));
-                } else if (parts.length >= 11) {
-                    movies.add(new Moviedata(
-                            parts[0].trim(),
-                            parts[1].trim(),
-                            parts[2].trim(),
-                            Double.parseDouble(parts[3].trim()),
-                            parts[4].trim(),
-                            parts[5].trim(),
-                            parts[6].trim(),
-                            parts[7].trim(),
-                            parts[8].trim(),
-                            parts[9].trim(),
-                            parts[10].trim()));
-                } else if (parts.length == 10) {
-                    movies.add(new Moviedata(
-                            parts[0].trim(),
-                            parts[1].trim(),
-                            parts[2].trim(),
-                            Double.parseDouble(parts[3].trim()),
-                            parts[4].trim(),
-                            parts[5].trim(),
-                            parts[6].trim(),
-                            parts[7].trim(),
-                            parts[8].trim(),
-                            parts[9].trim()));
-                } else if (parts.length == 4) {
-                    movies.add(new Moviedata(
-                            parts[0].trim(),
-                            parts[1].trim(),
-                            parts[2].trim(),
-                            Double.parseDouble(parts[3].trim())));
+                try {
+                    String[] parts = line.split(",");
+                    if (parts.length >= 12) {
+                        movies.add(new Moviedata(
+                                parts[0].trim(),
+                                parts[1].trim(),
+                                parts[2].trim(),
+                                Double.parseDouble(parts[3].trim()),
+                                parts[4].trim(),
+                                parts[5].trim(),
+                                parts[6].trim(),
+                                parts[7].trim(),
+                                parts[8].trim(),
+                                parts[9].trim(),
+                                parts[10].trim(),
+                                parts[11].trim()));
+                    } else if (parts.length >= 11) {
+                        movies.add(new Moviedata(
+                                parts[0].trim(),
+                                parts[1].trim(),
+                                parts[2].trim(),
+                                Double.parseDouble(parts[3].trim()),
+                                parts[4].trim(),
+                                parts[5].trim(),
+                                parts[6].trim(),
+                                parts[7].trim(),
+                                parts[8].trim(),
+                                parts[9].trim(),
+                                parts[10].trim()));
+                    } else if (parts.length == 10) {
+                        movies.add(new Moviedata(
+                                parts[0].trim(),
+                                parts[1].trim(),
+                                parts[2].trim(),
+                                Double.parseDouble(parts[3].trim()),
+                                parts[4].trim(),
+                                parts[5].trim(),
+                                parts[6].trim(),
+                                parts[7].trim(),
+                                parts[8].trim(),
+                                parts[9].trim()));
+                    } else if (parts.length == 4) {
+                        movies.add(new Moviedata(
+                                parts[0].trim(),
+                                parts[1].trim(),
+                                parts[2].trim(),
+                                Double.parseDouble(parts[3].trim())));
+                    }
+                } catch (NumberFormatException e) {
+                    System.err.println("Skipping malformed movie record: " + line);
                 }
             }
         } catch (IOException e) {
             System.err.println("Error reading movies file: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.err.println("Error parsing price: " + e.getMessage());
         }
 
         for (Moviedata movie : movies) {

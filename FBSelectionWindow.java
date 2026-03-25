@@ -241,9 +241,7 @@ public class FBSelectionWindow extends JFrame {
     
     private List<FBItem> loadFBItems() {
         List<FBItem> items = new ArrayList<>();
-        try {
-            String filePath = "FoodBeverages.txt";
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        try (BufferedReader reader = new BufferedReader(new FileReader("FoodBeverages.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
@@ -253,7 +251,6 @@ public class FBSelectionWindow extends JFrame {
                     items.add(new FBItem(itemName, itemPrice));
                 }
             }
-            reader.close();
         } catch (Exception e) {
             System.out.println("Error loading F&B items: " + e.getMessage());
         }

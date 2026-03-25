@@ -300,8 +300,7 @@ public class CustomerHistory extends JFrame {
     // Method to load F&B items for a specific booking
     private List<String> loadFBItemsForBooking(String bookingId) {
         List<String> items = new ArrayList<>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("FoodBeveragesOrders.txt"));
+        try (BufferedReader reader = new BufferedReader(new FileReader("FoodBeveragesOrders.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
@@ -317,7 +316,6 @@ public class CustomerHistory extends JFrame {
                     items.add(fbLine);
                 }
             }
-            reader.close();
         } catch (Exception e) {
             // File might not exist or has no data - that's fine
             System.out.println("No F&B items found for booking: " + bookingId);

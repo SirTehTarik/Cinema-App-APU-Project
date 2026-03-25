@@ -124,11 +124,12 @@ public class CancelBooking extends JFrame {
     }
     
     private void removeFBOrdersByBookingId(String bookingId) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("FoodBeveragesOrders.txt"));
-            StringBuilder content = new StringBuilder();
+        java.io.File fbFile = new java.io.File("FoodBeveragesOrders.txt");
+        if (!fbFile.exists()) return;
+
+        StringBuilder content = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(fbFile))) {
             String line;
-            
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("\\|");
                 // Keep only lines that don't match the booking ID
@@ -136,14 +137,16 @@ public class CancelBooking extends JFrame {
                     content.append(line).append("\n");
                 }
             }
-            br.close();
-            
-            // Write back the modified content
-            BufferedWriter bw = new BufferedWriter(new FileWriter("FoodBeveragesOrders.txt"));
-            bw.write(content.toString());
-            bw.close();
-        } catch (Exception e) {
+        } catch (java.io.IOException e) {
             // F&B file may not exist or have no orders
+            return;
+        }
+
+        // Write back the modified content
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fbFile))) {
+            bw.write(content.toString());
+        } catch (java.io.IOException e) {
+            System.err.println("Error updating F&B orders: " + e.getMessage());
         }
     }
 }

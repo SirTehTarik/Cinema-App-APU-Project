@@ -101,8 +101,7 @@ public class ManagerReports extends JFrame {
         Map<String, Double> revenueByFBItem = new LinkedHashMap<>();
         Map<String, Integer> fbItemCountByName = new LinkedHashMap<>();
         
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("FoodBeveragesOrders.txt"));
+        try (BufferedReader br = new BufferedReader(new FileReader("FoodBeveragesOrders.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("\\|");
@@ -123,7 +122,6 @@ public class ManagerReports extends JFrame {
                     }
                 }
             }
-            br.close();
         } catch (Exception e) {
             // F&B file may not exist yet
         }

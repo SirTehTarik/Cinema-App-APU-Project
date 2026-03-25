@@ -276,11 +276,12 @@ public class ModifySeatMap extends JFrame {
     }
 
     private void returnToPrevious() {
-        if (currentUser == null || currentUser.getRole().equals("Guest") || currentUser.getRole().equals("Manager") || currentUser.getRole().equals("Clerk")) {
-            // It's a Clerk or Manager
+        if (currentUser == null || currentUser.getRole().equals("Guest") || currentUser.getRole().equals("Clerk")) {
             new ClerkDashboard();
+        } else if (currentUser.getRole().equals("Manager")) {
+            new ManagerDashboard();
         } else {
-            // It's a Customer
+            // Customer
             new CustomerHistory(currentUser);
         }
         this.dispose();
